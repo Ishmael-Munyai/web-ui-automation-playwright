@@ -1,4 +1,4 @@
-```Mermaid
+```mermaid
 flowchart TD
     Start([User Trigger / Scheduler]) --> Bot[RPA Bot]
     Bot --> Process[Business Process Automation]
