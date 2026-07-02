@@ -1,39 +1,36 @@
 ```mermaid
 flowchart TD
-    Start([User Trigger / Scheduler]) --> Bot[RPA Bot]
-    Bot --> UI[UI Automation Layer]
-    UI --> App1[Web Application]
-    UI --> App2[Desktop Application]
-    UI --> App3[Legacy System]
+    subgraph UserInterface[UI System]
+        UIForm[Claim Entry Form]
+        UIDashboard[Claims Dashboard]
+    end
 
-    Bot --> Process[Business Process Logic]
-    Process --> DB[(MySQL Database)]
-    DB --> Query[Read/Write Data]
-    Query --> Process
+    subgraph RPAWorkflow[RPA Bot Workflow]
+        Trigger[Bot Trigger: Claim Received]
+        Extract[Extract Claim Data]
+        Validate[Validate Against Business Rules]
+        Register[Register Claim in UI System]
+        Exception[Exception Handling]
+    end
 
-    Process --> Report[Generate Report]
-    Report --> PPT[Export to PowerPoint]
-    Report --> BI[Power BI Metrics & Dashboards]
+    subgraph Database[Claims Database]
+        DBWrite[Write Claim Record]
+        DBUpdate[Update Claim Status]
+    end
 
-    BI --> KPI1[Operational KPIs]
-    BI --> KPI2[Financial Metrics]
-    BI --> KPI3[Process Efficiency]
+    subgraph Notifications[Communication Layer]
+        NotifyOfficer[Notify Claims Officer]
+        NotifyUser[Notify Claimant]
+    end
 
-    PPT --> End([Automated Output Delivered])
-    BI --> End
-
-    classDef actor stroke:#4ade80,fill:#f0fdf4
-    classDef system stroke:#818cf8,fill:#eef2ff
-    classDef ui stroke:#facc15,fill:#fefce8
-    classDef data stroke:#38bdf8,fill:#ecfeff
-    classDef output stroke:#fb923c,fill:#fff7ed
-    classDef analytics stroke:#a855f7,fill:#f5f3ff
-    classDef endStyle stroke:#f87171,fill:#fef2f2
-
-    class Start actor
-    class Bot,Process system
-    class UI ui
-    class DB,Query data
-    class Report,PPT output
-    class BI,KPI1,KPI2,KPI3 analytics
-    class End endStyle
+    %% Connections
+    UIForm --> Trigger
+    Trigger --> Extract
+    Extract --> Validate
+    Validate -->|Valid| Register
+    Validate -->|Invalid| Exception
+    Register --> UIDashboard
+    Register --> DBWrite
+    DBWrite --> DBUpdate
+    Exception --> NotifyOfficer
+    Register --> NotifyUser
