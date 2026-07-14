@@ -2,7 +2,7 @@
 flowchart LR
     DB[(Database)]
     Bot[RPA Bot]
-    ERP[Enterprise System (ERP/CRM/Core Banking)]
+    ERP[Enterprise System ERP/CRM/Core Banking]
     User([Business User])
 
     User -->|Trigger / Schedule| Bot
