@@ -22,7 +22,7 @@ flowchart TD
     class Output output
     class End endStyle
 
-flowchart LR
+
     DB[(Database)]
     Bot[RPA Bot]
     ERP[Enterprise System (ERP/CRM/Core Banking)]
